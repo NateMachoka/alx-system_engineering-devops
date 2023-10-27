@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Bash script that manages PID, displays messages, and responds to signals.
+
+pid_file="/var/run/myscript.pid"
+
+# Function to remove the PID file and exit.
+cleanup() {
+    rm -f "$pid_file"
+    exit
+}
+
+# Function to handle SIGTERM.
+sigterm_handler() {
+    echo "I hate the kill command"
+    cleanup
+}
+
+# Function to handle SIGINT.
+sigint_handler() {
+    echo "Y U no love me?!"
+}
+
+# Function to handle SIGQUIT.
+sigquit_handler() {
+    cleanup
+}
+
+# Trap signals and call the appropriate handler functions.
+trap 'sigterm_handler' SIGTERM
+trap 'sigint_handler' SIGINT
+trap 'sigquit_handler' SIGQUIT
+
+# Get the PID of the current script and store it in the PID file.
+echo $$ > "$pid_file"
+
+# Display "To infinity and beyond indefinitely."
+while true; do
+    echo "To infinity and beyond indefinitely"
+    sleep 2
+done
