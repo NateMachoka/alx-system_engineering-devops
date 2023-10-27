@@ -3,4 +3,4 @@
 
 # Use the 'ps' command to list all processes with full information, including process hierarchy.
 
-ps aux
+ps -aux
