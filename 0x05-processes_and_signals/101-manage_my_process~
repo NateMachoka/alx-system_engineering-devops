@@ -1,0 +1,58 @@
+#!/bin/bash
+### BEGIN INIT INFO
+# Provides:          manage_my_process
+# Required-Start:    $local_fs $remote_fs $network $syslog
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Manage the manage_my_process script
+# Description:       Start, stop, or restart the manage_my_process script.
+### END INIT INFO
+
+SCRIPT="/Betty/alx-system_engineering-devops/0x05-processes_and_signals/manage_my_process"
+PIDFILE="/var/run/my_process.pid"
+
+start() {
+    if [ -f "$PIDFILE" ]; then
+        echo "manage_my_process is already running."
+    else
+        "$SCRIPT" &
+        echo $! > "$PIDFILE"
+        echo "manage_my_process started."
+    fi
+}
+
+stop() {
+    if [ -f "$PIDFILE" ]; then
+        PID=$(cat "$PIDFILE")
+        kill "$PID"
+        rm -f "$PIDFILE"
+        echo "manage_my_process stopped."
+    else
+        echo "manage_my_process is not running."
+    fi
+}
+
+restart() {
+    stop
+    start
+    echo "manage_my_process restarted"
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        restart
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0
