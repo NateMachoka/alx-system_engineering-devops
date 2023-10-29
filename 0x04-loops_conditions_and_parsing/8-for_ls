@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Get the directory contents and store in cd_content
+cd_content=$(ls)
+
+# Use a for loop to process the directory contents
+for file in $cd_content; do
+  # Check if the file is not a hidden file (doesn't start with a dot)
+  if [[ $file != .* ]]; then
+    # Extract the part of the name after the first dash
+      filename=$(echo "$file" | cut -d'-' -f2-)
+
+# Display the modified filename in list format
+    echo "$filename"
+  fi
+done
