@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Use ifconfig to get network interface information
+
+ifconfig | awk '/inet / {print $2}'

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Listen on port 98 and echo incoming data
+
+PORT=98
+nc -l $PORT
