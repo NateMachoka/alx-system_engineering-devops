@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# A script that changes the IP addresses of localhost and facebook.com in the /etc/hosts file (USE WITH CARE. REVERT ONCE DONE)
+
+HOSTS_FILE_CURRENT="/etc/hosts"
+HOSTS_FILE_NEW="$HOME/hosts.new"
+FACEBOOK_IP_NEW="8.8.8.8"
+FACEBOOK_IP_NAME="facebook.com"
+
+cp "$HOSTS_FILE_CURRENT" "$HOSTS_FILE_NEW"
+sed -i s/^127.0.0.1/127.0.0.2/ "$HOSTS_FILE_NEW"
+echo -e "$FACEBOOK_IP_NEW\t$FACEBOOK_IP_NAME" >> "$HOSTS_FILE_NEW"
+cp -f "$HOSTS_FILE_NEW" "$HOSTS_FILE_CURRENT"

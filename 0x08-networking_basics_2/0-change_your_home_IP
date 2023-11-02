@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Script to configure the /etc/hosts file with a backup
+
+# Check if the script is run with sudo
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run this script with superuser privileges (sudo)."
+    exit 1
+fi
+
+# Define the new IP addresses and hostnames
+localhost_ip="127.0.0.2"
+facebook_ip="8.8.8.8"
+
+# Backup the original /etc/hosts file
+cp /etc/hosts /etc/hosts.bak
+
+# Update /etc/hosts file
+echo "$localhost_ip localhost" >> /etc/hosts
+echo "$facebook_ip facebook.com" >> /etc/hosts
+
+# Display the updated /etc/hosts file
+cat /etc/hosts
