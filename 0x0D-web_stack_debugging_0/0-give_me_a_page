@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Connect to the running container
+docker exec -it <container_id> /bin/bash
+
+# Inside the container, run the following commands:
+
+# Update package lists
+apt-get update
+
+# Install Apache2 if not already installed
+apt-get install -y apache2
+
+# Set the ServerName directive globally
+echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Create a simple HTML page
+echo "Hello Holberton" > /var/www/html/index.html
+
+# Start the Apache2 service
+service apache2 start
