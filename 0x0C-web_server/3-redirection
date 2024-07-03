@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 # Configure an Nginx server to /redirect_me redirects
 # The redirection is configured as a "301 Moved Permanently"
 
