@@ -1,36 +1,37 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#Configures the installed NGINX to:
+#+    Listen on port 80.
+#+    Return a page containing "Hello World" when queried
+#+     at the root with a curl GET request.
+# Configures /redirect_me as a "301 Moved Permanently".
+# Includes a custom 404 page containing "Ceci n'est pas une page".
 
-# Update package list and install nginx
-apt-get update -y
+
+apt-get update
 apt-get install -y nginx
 
-# Create a simple HTML file that contains "Hello World!"
-echo "Hello World!" > /var/www/html/index.html
 
-# Create a custom 404 page
-echo "Ceci n'est pas une page" > /var/www/html/404.html
+mkdir /etc/nginx/html
+touch /etc/nginx/html/index.html
+echo "Hello World!" > /etc/nginx/html/index.html
+touch /etc/nginx/html/404.html
+echo "Ceci n'est pas une page" > /etc/nginx/html/404.html
 
-# Ensure Nginx is listening on port 80 and configure the custom 404 page
-cat > /etc/nginx/sites-available/default <<EOF
-server {
-    listen 80 default_server;
+printf %s "server {
+    listen 80;
     listen [::]:80 default_server;
+    root   /etc/nginx/html;
+    index  index.html index.htm;
 
-    root /var/www/html;
-    index index.html;
-
-    server_name _;
-
-    location / {
-        try_files \$uri \$uri/ =404;
+    location /redirect_me {
+        return 301 http://cuberule.com/;
     }
 
     error_page 404 /404.html;
-    location = /404.html {
-        internal;
+    location /404 {
+      root /etc/nginx/html;
+      internal;
     }
-}
-EOF
+}" > /etc/nginx/sites-available/default
 
-# Restart nginx using its init script since systemctl is not allowed
 service nginx restart
