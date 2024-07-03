@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-# This script installs Nginx on a new Ubuntu machine and configures it to serve a page with "Hello World!"
+# This script installs Nginx on a new Ubuntu machine
+# configures it to serve a page with "Hello World!"
 
 
 apt-get update -y
 apt-get install nginx -y
+
 
 # Configure Nginx to listen on port 80
 mkdir /etc/nginx/html
