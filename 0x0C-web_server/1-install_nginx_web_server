@@ -2,7 +2,6 @@
 # This script installs Nginx on a new Ubuntu machine and configures it to serve a page with "Hello World!"
 
 
-# Update package lists and install Nginx
 apt-get update -y
 apt-get install nginx -y
 
