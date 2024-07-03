@@ -3,48 +3,23 @@ package { 'nginx':
   ensure => installed,
 }
 
-# Ensure index file is present and contains 'Hello World!'
-file { '/var/www/html/index.nginx-debian.html':
+# Make sure index file is present and serves 'Hello World!'
+file { 'Website index file':
   ensure  => present,
   content => 'Hello World!',
+  path    => '/var/www/html/index.nginx-debian.html',
   require => Package['nginx'],
 }
 
-# Configure the Nginx server block for the default site
-file { '/etc/nginx/sites-available/default':
+# Ensure 404 file is present and has 'Ceci n'est pas une page'
+file { 'Website 404 file':
   ensure  => present,
-  content => template('nginx/default.erb'),
-  require => Package['nginx'],
-  notify  => Service['nginx'],
+  path    => '/var/www/html/404.html',
+  content => "Ceci n'est pas une page",
 }
 
-# Ensure nginx is running
+# Ensure Nginx is running
 service { 'nginx':
   ensure  => running,
-  enable  => true,
-  require => Package['nginx'],
-}
-
-# Define the nginx configuration template
-file { 'nginx/default.erb':
-  ensure  => present,
-  content => @"
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    root /var/www/html;
-    index index.nginx-debian.html;
-
-    server_name _;
-
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-}
-"@
+  require => Package['nginx']
 }
