@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script sets up an nginx server on an Ubuntu machine and configures it to serve a custom HTML page with "Hello World!"
+# This script installs Nginx on a new Ubuntu machine and configures it to serve a page with "Hello World!"
 
 
 # Update package lists and install Nginx
@@ -10,7 +10,7 @@ apt-get install nginx -y
 sed -i 's/listen 80 default_server;/listen 80 default_server;/g' /etc/nginx/sites-available/default
 sed -i 's/listen \[::\]:80 default_server;/listen \[::\]:80 default_server;/g' /etc/nginx/sites-available/default
 
-# Configure Nginx to serve custom HTML content
+# Create the HTML file that Nginx will serve
 echo "Hello World!" > /var/www/html/index.nginx-debian.html
 
 # Start Nginx without using systemctl
