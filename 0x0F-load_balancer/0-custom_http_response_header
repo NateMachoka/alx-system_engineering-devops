@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Configures an Nginx server to include a response header with server's hostname
+# Configures an Nginx server to include a custom response header with the server's hostname
 
 # Ensure correct usage
 error="Usage: $0 HOSTNAME"
@@ -12,20 +12,27 @@ fi
 HOSTNAME=$1
 sudo hostnamectl set-hostname "$HOSTNAME"
 
-# Install nginx
+# Update and install Nginx
 sudo apt-get update
 sudo apt-get -y install nginx
 
-# Configure nginx to serve custom html content
+# Configure Nginx to serve custom HTML content
 echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
 
-# Configure nginx to add a custom header with the server's hostname
-CUSTOM_HEADER="add_header X-Served-By \$hostname;"
-CONFIG_FILE="/etc/nginx/conf.d/custom_header.conf"
+# Configure Nginx to redirect /redirect_me to another page
+sudo sed -i '/listen 80 default_server;/a rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' \
+/etc/nginx/sites-available/default
 
-echo -e "http {\n\t$CUSTOM_HEADER\n}" | sudo tee "$CONFIG_FILE"
+# Configure Nginx to have a custom 404 page
+echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/404.html
+sudo sed -i '/server_name _;/a error_page 404 /404.html;\nlocation = /404.html {\nroot /usr/share/nginx/html;\ninternal;\n}' \
+/etc/nginx/sites-available/default
 
-# Restart nginx to apply changes
-sudo systemctl restart nginx
+# Configure Nginx to add custom header with server's hostname
+sudo sed -i '/server_name _;/a add_header X-Served-By $hostname;' \
+/etc/nginx/sites-available/default
+
+# Restart Nginx to apply changes
+sudo service nginx restart
 
 echo "Nginx configured with custom header X-Served-By on hostname $(hostname)."
