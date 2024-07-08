@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Configures an Nginx server to include a response header with server's hostname
+
+# Ensure correct usage
+error="Usage: $0 HOSTNAME"
+if [[ $# -lt 1 ]]; then
+  echo "$error"
+  exit 1
+fi
+
+# Set hostname
+HOSTNAME=$1
+sudo hostnamectl set-hostname "$HOSTNAME"
+
+# Install nginx
+sudo apt-get update
+sudo apt-get -y install nginx
+
+# Configure nginx to serve custom html content
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
+
+# Configure nginx to add a custom header with the server's hostname
+CUSTOM_HEADER="add_header X-Served-By \$hostname;"
+CONFIG_FILE="/etc/nginx/conf.d/custom_header.conf"
+
+echo -e "http {\n\t$CUSTOM_HEADER\n}" | sudo tee "$CONFIG_FILE"
+
+# Restart nginx to apply changes
+sudo systemctl restart nginx
+
+echo "Nginx configured with custom header X-Served-By on hostname $(hostname)."
