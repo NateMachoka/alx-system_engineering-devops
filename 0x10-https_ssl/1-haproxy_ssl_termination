@@ -19,12 +19,14 @@ defaults
 
 frontend www-http
     bind *:80
+    reqadd X-Forwarded-Proto:\ http
     redirect scheme https code 301 if !{ ssl_fc }
 
 frontend www-https
     bind *:443 ssl crt /etc/letsencrypt/live/www.holberton.online/fullchain.pem
     reqadd X-Forwarded-Proto:\ https
-    default_backend holberton_backend
+    acl is_holberton hdr_end(host) -i www.holberton.online
+    use_backend holberton_backend if is_holberton
 
 backend holberton_backend
     balance roundrobin
