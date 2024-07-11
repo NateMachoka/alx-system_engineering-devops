@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Script that fixes an nginx server to serve content from port 80
+
+# Ensure the system package list is up to date
+apt-get update -y
+
+# Install Nginx if it's not already installed
+if ! dpkg -l | grep -q nginx; then
+    apt-get install nginx -y
+fi
+
+# Delete the default configuration if it exists
+rm -f /etc/nginx/sites-enabled/default
+
+# Create a symbolic link to the default configuration
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# Ensure Nginx configuration is set to listen on port 80
+sed -i 's/listen 8080/listen 80/g' /etc/nginx/sites-enabled/default
+
+# Restart the Nginx service to apply configuration changes
+service nginx restart

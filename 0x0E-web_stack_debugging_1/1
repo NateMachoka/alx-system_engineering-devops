@@ -1,0 +1,11 @@
+Get:1 http://security.ubuntu.com/ubuntu focal-security InRelease [128 kB]
+Hit:2 http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu focal InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu focal InRelease
+Get:4 http://archive.ubuntu.com/ubuntu focal-updates InRelease [128 kB]
+Hit:5 http://archive.ubuntu.com/ubuntu focal-backports InRelease
+Get:6 http://security.ubuntu.com/ubuntu focal-security/restricted amd64 Packages [3,745 kB]
+Get:7 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [1,245 kB]
+Get:8 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [3,776 kB]
+Get:9 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [4,245 kB]
+Get:10 http://archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [3,895 kB]
+Get:11 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1,530 kB]
