@@ -27,4 +27,7 @@ frontend www-https
     default_backend holberton_backend
 
 backend holberton_backend
-    server webserver1 127.0.0.1:80
+    balance roundrobin
+    option httpchk GET /
+    server webserver1 18.209.178.235:80 check
+    server webserver2 18.233.62.168:80 check
