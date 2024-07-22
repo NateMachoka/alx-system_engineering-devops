@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# This script installs Nginx, configures it to run as the 'nginx' user, and sets it to listen on port 8080
+
+# Update package lists
+apt-get update
+
+# Install Nginx
+apt-get install -y nginx
+
+# Ensure Nginx configuration directory exists
+mkdir -p /etc/nginx
+
+# Create or modify the Nginx configuration file
+cat <<EOF > /etc/nginx/nginx.conf
+user nginx;
+worker_processes 1;
+events {
+    worker_connections 1024;
+}
+http {
+    server {
+        listen 8080;
+        server_name localhost;
+
+        location / {
+            root /usr/share/nginx/html;
+            index index.html index.htm;
+        }
+    }
+}
+EOF
+
+# Update the Nginx user and group in the system if needed
+usermod -s /sbin/nologin nginx
+
+# Restart Nginx to apply the changes
+systemctl restart nginx
+
+# Verify Nginx status
+systemctl status nginx
