@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Update package list and install ufw
+sudo apt update
+sudo apt install ufw -y
+
+# Allow SSH
+sudo ufw allow 22
+
+# Allow HTTP
+sudo ufw allow 80
+
+# Allow HTTPS
+sudo ufw allow 443/tcp
+
+# Enable ufw
+sudo ufw enable
