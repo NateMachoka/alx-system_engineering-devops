@@ -1,21 +1,21 @@
 #!/bin/bash
 
 # Update package list and install ufw
-sudo apt update
-sudo apt install ufw -y
+apt update
+apt install ufw -y
 
 # Set default policies
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
+ufw default deny incoming
+ufw default allow outgoing
 
 # Allow SSH
-sudo ufw allow 22/tcp
+ufw allow 22/tcp
 
 # Allow HTTP
-sudo ufw allow 80/tcp
+ufw allow 80/tcp
 
 # Allow HTTPS
-sudo ufw allow 443/tcp
+ufw allow 443/tcp
 
 # Enable ufw
-sudo ufw enable
+ufw enable
