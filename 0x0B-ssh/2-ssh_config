@@ -1,0 +1,7 @@
+# Configuration to connect to a server without typing a passphrase
+
+Host *
+    HostName 54.162.6.152
+    User ubuntu
+    IdentityFile ~/.ssh/school
+    PasswordAuthentication no
