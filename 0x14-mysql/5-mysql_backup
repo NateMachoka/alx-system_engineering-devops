@@ -10,4 +10,4 @@ ARCHIVE_FILE="${DATE}.tar.gz"
 mysqldump -u root -p"$MYSQL_PASSWORD" --all-databases > "$BACKUP_FILE"
 
 # Compress the backup file
-tar -czf "$ARCHIVE_FILE" "$BACKUP_FILE"
+tar -cvzf "$ARCHIVE_FILE" "$BACKUP_FILE"
