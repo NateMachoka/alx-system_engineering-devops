@@ -22,17 +22,18 @@ if __name__ == "__main__":
 
     base_url = "https://jsonplaceholder.typicode.com"
 
-    # Fetch employee data
-    user = requests.get(f"{base_url}/users/{employee_id}").json()
-    user_name = user.get("username")  # Changed from 'name' to 'username'
+    try:
+        # Fetch employee data
+        user = requests.get(f"{base_url}/users/{employee_id}").json()
+        user_name = user.get("username")
+        user_id = user.get("id")
 
-    # Fetch TODO list for the employee
-    todos = requests.get(f"{base_url}/todos",
-                         params={"userId": employee_id}).json()
+        # Fetch TODO list for the employee
+        todos = requests.get(f"{base_url}/todos",
+                             params={"userId": employee_id}).json()
 
-    # Prepare data for JSON
-    json_data = {
-        str(employee_id): [
+        # Prepare data for JSON
+        tasks_list = [
             {
                 "task": todo.get("title"),
                 "completed": todo.get("completed"),
@@ -40,9 +41,14 @@ if __name__ == "__main__":
             }
             for todo in todos
         ]
-    }
 
-    # Write JSON data to file
-    json_filename = f"{employee_id}.json"
-    with open(json_filename, 'w') as json_file:
-        json.dump(json_data, json_file, indent=4)
+        json_data = {str(user_id): tasks_list}
+
+        # Write JSON data to file
+        json_filename = f"{user_id}.json"
+        with open(json_filename, 'w', encoding='utf-8') as json_file:
+            json.dump(json_data, json_file, indent=4)
+
+    except Exception as error:
+        print(error)
+        sys.exit(1)
