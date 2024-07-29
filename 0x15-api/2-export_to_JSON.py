@@ -41,13 +41,13 @@ if __name__ == "__main__":
             }
             for todo in todos
         ]
-
         json_data = {str(user_id): tasks_list}
 
-        # Write JSON data to file
+        # Write JSON data to file in a continuous format
         json_filename = f"{user_id}.json"
         with open(json_filename, 'w', encoding='utf-8') as json_file:
-            json.dump(json_data, json_file, indent=4)
+            json.dump(json_data, json_file,
+                      separators=(',', ':'), ensure_ascii=False)
 
     except Exception as error:
         print(error)
