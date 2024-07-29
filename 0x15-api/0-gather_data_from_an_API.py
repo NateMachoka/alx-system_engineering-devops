@@ -19,19 +19,21 @@ if __name__ == "__main__":
 
     base_url = "https://jsonplaceholder.typicode.com"
 
-    # Fetch employee data
     user = requests.get(f"{base_url}/users/{employee_id}").json()
     user_name = user.get("name")
 
     # Fetch TODO list for the employee
-    todos = requests.get(f"{base_url}/todos", params={"userId": employee_id}).json()
+    todos = requests.get(f"{base_url}/todos",
+                         params={"userId": employee_id}).json()
 
     # Filter completed tasks
     completed_tasks = [t.get("title") for t in todos if t.get("completed")]
     total_tasks = len(todos)
     number_of_done_tasks = len(completed_tasks)
 
-    # Output results
-    print(f"Employee {user_name} is done with tasks({number_of_done_tasks}/{total_tasks}):")
-    for task in completed_tasks:
-        print(f"\t {task}")
+    print(
+        f"Employee {employee_name} is done with tasks("
+        f"{number_of_done_tasks}/{total_tasks}):"
+    )
+    for task in done_tasks:
+        print(f"\t {task.get('title')}")
