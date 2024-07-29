@@ -23,7 +23,8 @@ if __name__ == "__main__":
     user = requests.get(f"{base_url}/users/{employee_id}").json()
     user_name = user.get("username")
 
-    todos = requests.get(f"{base_url}/todos", params={"userId": employee_id}).json()
+    todos = requests.get(f"{base_url}/todos",
+                         params={"userId": employee_id}).json()
 
     file_name = f"{employee_id}.csv"
     with open(file_name, mode='w', newline='') as file:
@@ -34,4 +35,4 @@ if __name__ == "__main__":
                 user_name,
                 task.get("completed"),
                 task.get("title")
-        ])
+            ])
