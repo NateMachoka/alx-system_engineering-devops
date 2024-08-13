@@ -8,7 +8,7 @@ import re
 
 
 def count_words(subreddit, word_list, after=None, keyword_counts=None):
-    """Recursively queries Reddit API to count keywords in hot article titles"""
+    """Recursively queries Reddit API to count keywords in hot titles"""
     if keyword_counts is None:
         keyword_counts = {word.lower(): 0 for word in word_list}
 
@@ -43,7 +43,11 @@ def count_words(subreddit, word_list, after=None, keyword_counts=None):
 
     if keyword_counts:
         sorted_counts = sorted(
-            ((word, count) for word, count in keyword_counts.items() if count > 0),
+            (
+                (word, count)
+                for word, count in keyword_counts.items()
+                if count > 0
+                ),
             key=lambda x: (-x[1], x[0])
         )
         for word, count in sorted_counts:
